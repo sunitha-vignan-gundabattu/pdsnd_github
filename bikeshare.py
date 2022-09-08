@@ -92,7 +92,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    df = pd.read_csv(f"data_files\\{city.replace(' ', '_')}.csv")
+    df = pd.read_csv(f"{city.replace(' ', '_')}.csv")
 
     # Convert the Start and End Time columns to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
@@ -202,6 +202,15 @@ def user_stats(df,city):
     print(f"\nThis took {time.time() - start_time} seconds.")
     print('-' * 40)
 
+# Display raw data
+def display_raw_data(df):
+    choice = input("\nDo you want to view 5 rows of the data (yes/no): ").lower()
+    cnt = 0
+    while (choice=='yes' or choice=='y'):
+        print(df.iloc[cnt:cnt+5])
+        cnt += 5
+        choice = input("\nContinue to display 5 rows of data (yes/no): ").lower()
+    return df
 
 def main():
     while(True):
@@ -212,6 +221,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df,city)
+        display_raw_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
